@@ -2,6 +2,7 @@ export const navConfig = [
   {
     title: '对话组件',
     list: [
+      { name: '对话pro', code: 'chat-pro' },
       { name: '对话容器', code: 'chat' },
       { name: '气泡', code: 'bubble' },
       { name: '卡片', code: 'card' },

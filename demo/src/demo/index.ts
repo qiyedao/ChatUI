@@ -46,3 +46,4 @@ export { default as Toast } from './Toast';
 export { default as Typing } from './Typing';
 export { default as Video } from './Video';
 export { default as VisuallyHidden } from './VisuallyHidden';
+export { default as ChatPro } from './ChatPro';
