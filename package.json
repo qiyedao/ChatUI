@@ -23,6 +23,9 @@
     "build": "npm run js:cjs && npm run js:esm && npm run build:types",
     "build:css": "lessc src/styles/index.less dist/index.css && npm run prefix && npm run copy:less",
     "build:umd": " cross-env BABEL_ENV=umd rollup -c && npm run build:css",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs",
     "prepublishOnly": "npm run build && npm run build:umd",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -84,7 +87,8 @@
     "rollup": "^2.75.6",
     "rollup-plugin-terser": "^7.0.2",
     "ts-jest": "^28.0.5",
-    "typescript": "^4.7.3"
+    "typescript": "^4.7.3",
+    "vitepress": "^1.0.0-alpha.36"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
@@ -108,8 +112,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/ChatUI"
+    "url": "https://github.com/qiyedao/ChatUI"
   },
-  "author": "akai <akainice@gmail.com>",
+  "author": "yiyi <jiaoy169@gmail.com>",
   "license": "MIT"
 }

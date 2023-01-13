@@ -17,6 +17,8 @@ export class ChatSDK {
     this.handlers = options.handlers;
   }
   handleMessageAvtar() {
+    console.log('token 5');
+
     if (this.config) {
       const messages = this.config?.messages || [];
       messages.map((item) => {
@@ -31,34 +33,59 @@ export class ChatSDK {
       this.config.messages = messages;
     }
   }
-  handleGetToken() {
+  async handleGetToken() {
+    console.log('token 2');
+
     if (this.requests?.tokenUrl) {
-      this.requests
-        .request(this.requests.baseUrl + this.requests.tokenUrl, {
-          params: {
-            param: 'test',
-            channel: 1,
-            version: 0,
-            userId: this.requests.userId,
-            sceneId: this.requests.sceneId,
-          },
-          getResponse: true,
-        })
-        .then(({ data }) => {
-          if (data.retCode == 1) {
-            if (this.requests) {
-              this.requests.token = data.data;
-            }
-          }
-          console.log(data, 'res');
-        });
+      const { data } = await this.requests.request(this.requests.baseUrl + this.requests.tokenUrl, {
+        params: {
+          param: 'test',
+          channel: 1,
+          version: 0,
+          userId: this.requests.userId,
+          sceneId: this.requests.sceneId,
+        },
+        getResponse: true,
+      });
+      if (data.retCode == 1) {
+        if (this.requests) {
+          this.requests.token = data.data;
+          console.log('token', '3');
+        }
+      }
+      console.log(data, 'res');
     }
   }
 
-  init() {
-    this.handleGetToken();
+  async init() {
+    setTimeout(() => {
+      console.log('0');
 
+      new Promise((resolve) => {
+        console.log('00');
+        resolve('00');
+        console.log('000');
+      }).then((res) => {
+        console.log('0000');
+      });
+    });
+    console.log('token 1');
+    await this.handleGetToken();
+    console.log('token 4');
+
+    setTimeout(() => {
+      console.log('01');
+
+      new Promise((resolve) => {
+        console.log('001');
+        resolve('001');
+        console.log('0001');
+      }).then((res) => {
+        console.log('00001');
+      });
+    });
     this.handleMessageAvtar();
+    console.log(this.requests?.token, 'token 6', this.requests?.tokenUrl);
 
     ReactDOM.render(
       <ChatPro
