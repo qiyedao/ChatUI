@@ -28,34 +28,34 @@ export default () => {
       hasTime: true,
       _id: 1234,
     },
-    {
-      type: 'guess-you',
-      _id: 12345,
-    },
-    {
-      type: 'skill-cards',
-      _id: 123456,
-    },
-    {
-      type: 'text',
-      content: { text: '小蜜我要查看我的物流信息' },
-      position: 'right',
-      _id: 1234567,
-    },
-    {
-      type: 'image',
-      content: {
-        picUrl: '//img.alicdn.com/tfs/TB1p_nirYr1gK0jSZR0XXbP8XXa-300-300.png',
-      },
-      _id: 12345678,
-    },
-    {
-      type: 'system',
-      content: {
-        text: '由于您长时间未说话或退出小蜜（离开页面、锁屏等）已自动结束本次服务',
-      },
-      _id: 123456789,
-    },
+    // {
+    //   type: 'guess-you',
+    //   _id: 12345,
+    // },
+    // {
+    //   type: 'skill-cards',
+    //   _id: 123456,
+    // },
+    // {
+    //   type: 'text',
+    //   content: { text: '小蜜我要查看我的物流信息' },
+    //   position: 'right',
+    //   _id: 1234567,
+    // },
+    // {
+    //   type: 'image',
+    //   content: {
+    //     picUrl: '//img.alicdn.com/tfs/TB1p_nirYr1gK0jSZR0XXbP8XXa-300-300.png',
+    //   },
+    //   _id: 12345678,
+    // },
+    // {
+    //   type: 'system',
+    //   content: {
+    //     text: '由于您长时间未说话或退出小蜜（离开页面、锁屏等）已自动结束本次服务',
+    //   },
+    //   _id: 123456789,
+    // },
   ];
   const defaultQuickReplies = [
     {
@@ -163,7 +163,7 @@ export default () => {
       root: document.getElementById('chat') as HTMLElement,
       config: {
         messages: initialMessages,
-        quickReplies: defaultQuickReplies,
+        // quickReplies: defaultQuickReplies,
         robot: {
           avatar: '//gw.alicdn.com/tfs/TB1DYHLwMHqK1RjSZFEXXcGMXXa-56-62.svg',
           name: '小小蜜',
