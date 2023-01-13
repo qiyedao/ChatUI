@@ -137,3 +137,4 @@ export type { GoodsProps } from './components/Goods';
 
 export { Chat as default } from './components/Chat';
 export type { ChatProps } from './components/Chat';
+export { ChatSDK } from './pro';
