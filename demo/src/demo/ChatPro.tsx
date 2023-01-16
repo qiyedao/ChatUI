@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import '../../../src';
 import {
   Card,
   CardText,
@@ -217,7 +216,7 @@ export default () => {
   };
   let chat: any;
   useEffect(() => {
-    chat = new window.ChatSDK({
+    chat = new ChatSDK({
       root: document.getElementById('chat-pro') as HTMLElement,
       config: {
         messages: initialMessages,
