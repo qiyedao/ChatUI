@@ -18,6 +18,7 @@ interface Requests {
   token?: string;
   userId: string;
   sceneId: string;
+  openMediaUrl: string | '/qa/manage/media/preview';
   request: (url: string, options: RequestOptionsWithResponse) => Promise<RequestResponse<any>>;
   send: (msg: MessageWithoutId) => Promise<CommonRequestResponse>;
 }

@@ -5,7 +5,7 @@ import { RichText } from '../../../../components/RichText';
 const DefaultMsg: React.FC<any> = (props) => {
   return (
     <Bubble>
-      <RichText content={props?.qaResult?.answer[0]?.content || ''} />
+      <RichText content={props?.data?.qaResult?.answer[0]?.content || ''} />
     </Bubble>
   );
 };

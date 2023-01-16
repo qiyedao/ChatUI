@@ -3,6 +3,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import pkg from './package.json';
+import postcss from 'rollup-plugin-postcss';
 
 const name = 'ChatUI';
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
@@ -13,6 +14,8 @@ export default {
   plugins: [
     resolve({ extensions }),
     commonjs(),
+    postcss(),
+
     babel({
       extensions,
       babelHelpers: 'runtime',

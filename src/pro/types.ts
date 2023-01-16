@@ -1,8 +1,11 @@
 import { RequestOptionsInit, RequestOptionsWithResponse, RequestResponse } from 'umi-request';
-import { MessageProps, QuickReplyItemProps } from '..';
+import { MessageProps, QuickReplyItemProps, ToolbarItemProps } from '..';
+import { AutoCompleteItemProps } from '../components/AutoCompletes';
 import { User } from '../components/Message/Message';
 type MessageWithoutId = Omit<MessageProps, '_id'>;
-
+export interface ObjectType {
+  [key: string | number]: any;
+}
 export interface Options {
   root: HTMLElement;
   config?: Config | undefined;
@@ -23,6 +26,7 @@ export interface Config {
   messages?: MessageProps[]; // 初始化消息
   toolbar?: []; // 加号扩展
   quickReplies?: QuickReplyItemProps[]; // 快捷短语
+  autoCompletes?: AutoCompleteItemProps[]; //联想输入
   inputType?: 'text' | 'voice'; // 输入方式
   placeholder?: string; // 输入框占位符
 }
@@ -38,88 +42,99 @@ export interface Requests {
   token?: string;
   userId: string;
   sceneId: string;
+  openMediaUrl: string | '/qa/manage/media/preview';
   request: (url: string, options: RequestOptionsWithResponse) => Promise<RequestResponse<any>>;
   send: (msg: MessageWithoutId) => Promise<CommonRequestResponse>;
 }
 
 export interface Handlers {
-  parseResponse?: (res: any, requestType: string) => Promise<any>;
-}
-
-export interface Components {
-  [key: string | number]: React.FC<any> | React.ComponentType<any>;
+  //格式化消息
+  formatReceiveMsg: (res: any) => any;
+  //点击快捷短语
+  onClickQuickReply?: (item: QuickReplyItemProps, ctx: Ctx) => void;
+  //工具栏
+  onToolbarClick?: (item: ToolbarItemProps, ctx: Ctx) => void;
+  //点击联想输入
+  onClickAutoComplete?: (item: AutoCompleteItemProps, ctx: Ctx) => void;
+  //输入框输入
+  onInputChange?: (value: string, ctx: Ctx) => void;
 }
 
 export type Ctx = {
   // 添加消息
-  appendMessage(msg: Message): void;
+  appendMessage(msg: MessageProps): void;
 
   // 发送消息
-  postMessage(msg: Message): void;
+  postMessage(type: string, val: string): void;
 
   // 更新消息
-  updateMessage(msgId: string, msg: Message): void;
+  updateMessage(msgId: string, msg: MessageProps): void;
 
   // 删除消息
   deleteMessage(msgId: string): void;
 
-  // 埋点方法
-  log: {
-    // 点击埋点
-    click(params: any, logParams: any): void;
+  // // 埋点方法
+  // log: {
+  //   // 点击埋点
+  //   click(params: any, logParams: any): void;
 
-    // 曝光埋点
-    expo(params: any, logParams: any): void;
-  };
+  //   // 曝光埋点
+  //   expo(params: any, logParams: any): void;
+  // };
 
-  // 界面相关的方法
+  // // 界面相关的方法
   ui: {
-    // 滚动消息列表到底部
-    scrollToEnd(opts?: { animated?: boolean; delay?: number }): void;
+    // // 滚动消息列表到底部
+    // scrollToEnd(opts?: { animated?: boolean; delay?: number }): void;
 
     // 隐藏快捷短语
     hideQuickReplies(): void;
 
     // 显示快捷短语
     showQuickReplies(): void;
+    //设置联想输入
+    setAutoCompletes: (list: AutoCompleteItemProps[]) => void;
   };
 
   // 配置
   config: Config;
-  // jsBridge 方法
-  JSBridge: Bridge;
-  // 工具函数
+  //requests
+  requests: Requests;
+  // // jsBridge 方法
+  JSBridge?: Bridge;
+  // // 工具函数
   util: Util;
 };
 
-interface Message {
-  // 类型
-  type: string;
-  // 内容
-  content: any;
-  // ID
-  _id?: string;
-  // 创建时间
-  createdAt?: number;
-  // 发送者信息
-  user?: {
-    avatar: string;
-  };
-  // 显示位置
-  position?: 'left' | 'right' | 'center';
-  // 是否显示时间
-  hasTime?: boolean;
-}
-
 interface Util {
   // 封装 fetch 后的方法
-  fetchData: (opts: { url: string; type?: string; data: any }) => Promise<any>;
+  fetchData: (
+    url: string,
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+    data: ObjectType,
+    ...options: any
+  ) => Promise<RequestResponse<any>>;
 
   // 打开新窗口
   openWindow(url: string): void;
 
   // 关闭窗口
   popWindow(): void;
+  toast: {
+    show: (
+      content: string,
+      type?: 'success' | 'error' | 'loading' | undefined,
+      duration?: number | undefined,
+    ) => void;
+    fail: (content: string, duration?: number | undefined) => void;
+    success: (content: string, duration?: number | undefined) => void;
+    loading: (content: string, duration?: number | undefined) => void;
+  };
+  //格式化message
+  formatReceiveMessage: (res: any) => any;
 }
 
 interface Bridge {}
+export interface Components {
+  [key: string | number]: React.FC<any> | React.ComponentType<any>;
+}

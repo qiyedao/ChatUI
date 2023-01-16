@@ -9,6 +9,7 @@ import {
 import { QuickReplies, QuickReplyItemProps } from '../QuickReplies';
 import { Composer as DComposer, ComposerProps, ComposerHandle } from '../Composer';
 import { isSafari, getIOSMajorVersion } from '../../utils/ua';
+import { AutoCompletes, AutoCompleteItemProps } from '../AutoCompletes';
 
 export type ChatProps = Omit<ComposerProps, 'onFocus' | 'onChange' | 'onBlur'> &
   MessageContainerProps & {
@@ -80,6 +81,27 @@ export type ChatProps = Omit<ComposerProps, 'onFocus' | 'onChange' | 'onBlur'> &
      * 快捷短语渲染函数
      */
     renderQuickReplies?: () => void;
+
+    /**
+     * 联想输入
+     */
+    autoCompletes?: AutoCompleteItemProps[];
+    /**
+     * 联想输入是否可见
+     */
+    autoCompletesVisible?: boolean;
+    /**
+     * 联想输入的点击回调
+     */
+    onAutoCompleteClick?: (item: AutoCompleteItemProps, index: number) => void;
+    /**
+     * 联想输入的滚动回调
+     */
+    onAutoCompleteScroll?: () => void;
+    /**
+     * 联想输入渲染函数
+     */
+    renderAutoCompletes?: () => void;
     /**
      * 输入区 ref
      */
@@ -163,6 +185,11 @@ export const Chat = React.forwardRef<HTMLDivElement, ChatProps>((props, ref) => 
     onQuickReplyClick = () => {},
     onQuickReplyScroll,
     renderQuickReplies,
+    autoCompletes = [],
+    autoCompletesVisible,
+    onAutoCompleteClick = () => {},
+    onAutoCompleteScroll,
+    renderAutoCompletes,
     text,
     textOnce,
     placeholder,
@@ -221,6 +248,16 @@ export const Chat = React.forwardRef<HTMLDivElement, ChatProps>((props, ref) => 
           onBackBottomClick={onBackBottomClick}
         />
         <div className="ChatFooter">
+          {renderAutoCompletes ? (
+            renderAutoCompletes()
+          ) : (
+            <AutoCompletes
+              items={autoCompletes}
+              visible={autoCompletesVisible}
+              onClick={onAutoCompleteClick}
+              onScroll={onAutoCompleteScroll}
+            />
+          )}
           {renderQuickReplies ? (
             renderQuickReplies()
           ) : (

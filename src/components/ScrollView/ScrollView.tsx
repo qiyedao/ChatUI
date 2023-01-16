@@ -84,7 +84,7 @@ export const ScrollView = React.forwardRef<ScrollViewHandle, ScrollViewProps<any
       ref={ref as React.RefObject<HTMLDivElement>}
       {...other}
     >
-      {hasControls && (
+      {hasControls && scrollX && (
         <IconButton
           className="ScrollView-control"
           icon="chevron-left"
@@ -111,7 +111,7 @@ export const ScrollView = React.forwardRef<ScrollViewHandle, ScrollViewProps<any
           ) : null}
         </div>
       </div>
-      {hasControls && (
+      {hasControls && scrollX && (
         <IconButton
           className="ScrollView-control"
           icon="chevron-right"

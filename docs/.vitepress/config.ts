@@ -169,6 +169,14 @@ export default defineConfig({
               text: 'Components Options',
               link: '/config/components',
             },
+            {
+              text: 'Handlers Options',
+              link: '/config/handlers',
+            },
+            {
+              text: 'Api ctx',
+              link: '/config/API-ctx',
+            },
           ],
         },
       ],

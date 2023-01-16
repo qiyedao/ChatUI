@@ -12,7 +12,6 @@ export default function App() {
     const Comp = (demos as any)[toPascalCase(route.code)];
     return { path: `/${route.code}`, element: <Comp /> };
   });
-  console.log('routesConfig', routesConfig);
 
   const element = useRoutes([{ path: '/', element: <DemoIndex /> }, ...routesConfig]);
 

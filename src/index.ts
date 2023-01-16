@@ -21,6 +21,12 @@ export type { LazyComponentProps, LazyComponentOnLoadParams } from './components
 
 export { Avatar } from './components/Avatar';
 export type { AvatarProps, AvatarSize, AvatarShape } from './components/Avatar';
+export { AutoCompletes } from './components/AutoCompletes';
+export type {
+  AutoCompletesProps,
+  AutoCompleteProps,
+  AutoCompleteItemProps,
+} from './components/AutoCompletes';
 export { Backdrop } from './components/Backdrop';
 export type { BackdropProps } from './components/Backdrop';
 export { Bubble } from './components/Bubble';

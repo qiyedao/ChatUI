@@ -1,15 +1,15 @@
 import React, { useState, useLayoutEffect, useRef } from 'react';
 import { ScrollView, ScrollViewHandle } from '../ScrollView/ScrollView';
-import { QuickReply, QuickReplyItemProps } from './QuickReply';
+import { AutoComplete, AutoCompleteItemProps } from './AutoComplete';
 
-export interface QuickRepliesProps {
-  items: QuickReplyItemProps[];
+export interface AutoCompletesProps {
+  items: AutoCompleteItemProps[];
   visible?: boolean;
-  onClick: (item: QuickReplyItemProps, index: number) => void;
+  onClick: (item: AutoCompleteItemProps, index: number) => void;
   onScroll?: (event: React.UIEvent<HTMLDivElement, UIEvent>) => void;
 }
 
-const QuickReplies = (props: QuickRepliesProps) => {
+const AutoCompletes = (props: AutoCompletesProps) => {
   const { items, visible, onClick, onScroll } = props;
   const scroller = useRef<ScrollViewHandle>(null);
   const [scrollEvent, setScrollEvent] = useState(!!onScroll);
@@ -33,25 +33,24 @@ const QuickReplies = (props: QuickRepliesProps) => {
   if (!items.length) return null;
 
   return (
-    <div className="QuickReplies-Wrapper">
-      <ScrollView
-        className="QuickReplies"
-        data={items}
-        itemKey="name"
-        ref={scroller}
-        data-visible={visible}
-        onScroll={scrollEvent ? onScroll : undefined}
-        renderItem={(item: QuickReplyItemProps, index) => (
-          <QuickReply item={item} index={index} onClick={onClick} key={item.name} />
-        )}
-      />
-    </div>
+    <ScrollView
+      className="AutoCompletes"
+      data={items}
+      scrollX={false}
+      itemKey="name"
+      ref={scroller}
+      data-visible={visible}
+      onScroll={scrollEvent ? onScroll : undefined}
+      renderItem={(item: AutoCompleteItemProps, index) => (
+        <AutoComplete item={item} index={index} onClick={onClick} key={item.name} />
+      )}
+    />
   );
 };
 
-QuickReplies.defaultProps = {
+AutoCompletes.defaultProps = {
   items: [],
   visible: true,
 };
 
-export default React.memo(QuickReplies);
+export default React.memo(AutoCompletes);

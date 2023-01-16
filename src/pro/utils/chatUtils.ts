@@ -115,7 +115,7 @@ const getKnowledgeGraphList = (res: any) => {
 // 5: 推荐答案的知识点
 // 6: 分类推荐的知识点
 // 11: 客服问答
-export const formatReceiveMsg = (msgData: MsgItem) => {
+export const formatReceiveMsg = (msgData: any) => {
   const { resultType, qaResult, isRhetorical } = msgData;
   // let { qaType } = qaResult
 

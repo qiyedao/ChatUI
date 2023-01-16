@@ -19,11 +19,11 @@ export interface MessageProps {
   /**
    * 唯一ID
    */
-  _id: MessageId;
+  _id?: MessageId;
   /**
    * 消息类型
    */
-  type: string;
+  type: string | number;
   /**
    * 消息内容
    */
