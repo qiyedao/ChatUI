@@ -9,7 +9,6 @@ import {
   List,
   ListItem,
   ScrollView,
-  Button,
 } from '../../../src';
 import { MessageProps } from '../../../src';
 
@@ -238,6 +237,15 @@ export default () => {
         baseUrl: 'http://192.168.3.209:18080',
         userId: '1000008c169907f3b2843fba8c67c6a4a8fd23a',
         sceneId: '4840de564d794fc7bee7fc90f1f125c0',
+        requestInterceptor: (url, options) => {
+          console.log('requestInterceptor', options);
+
+          return { url, options };
+        },
+        responseInterceptor: (response) => {
+          console.log('responseInterceptor', response);
+          return response;
+        },
       },
       handlers: {
         onToolbarClick: function (item, ctx) {

@@ -14,16 +14,17 @@ import DefaultMsg from './components/Chat/DefaultMsg';
 import { Components, Config, Ctx, Handlers, ObjectType, Requests } from './types';
 import useAutoCompletes from '../hooks/useAutoCompletes';
 import { AutoCompleteItemProps } from '../components/AutoCompletes';
-import umiRequest from 'umi-request';
 import { MessageContainerHandle } from '../components/MessageContainer';
 import { ComposerHandle } from '../components/Composer';
 import { AnswerType } from './utils/constants';
+import customRequest from './request';
 interface ChatProProps {
   config: Config;
   requests: Requests;
   handlers: Handlers;
   components: Components;
 }
+
 const ChatPro: React.FC<ChatProProps> = (props) => {
   const { config, requests, components, handlers } = props;
 
@@ -40,8 +41,10 @@ const ChatPro: React.FC<ChatProProps> = (props) => {
         },
       };
     },
-    request = umiRequest,
+
+    request = customRequest(),
   } = requests;
+
   // 消息列表
   const { messages, appendMsg, updateMsg, deleteMsg, setTyping } = useMessages(config.messages);
   const { quickReplies, quickRepliesVisible, setQuickRepliesVisible } = useQuickReplies(
@@ -53,16 +56,6 @@ const ChatPro: React.FC<ChatProProps> = (props) => {
 
   const msgRef = React.useRef<MessageContainerHandle>(null);
   const composerRef = React.useRef<ComposerHandle>(null);
-  const formatParams = (params: any) => {
-    const newParams = {
-      sceneId: requests.sceneId,
-      userId: requests.userId,
-      token: requests.token,
-      channel: 1,
-      version: 0,
-    };
-    return { ...newParams, ...params };
-  };
 
   const toolbar = [
     {
@@ -81,6 +74,17 @@ const ChatPro: React.FC<ChatProProps> = (props) => {
       title: '拍照',
     },
   ];
+  const formatParams = (params: any) => {
+    const newParams = {
+      sceneId: requests.sceneId,
+      userId: requests.userId,
+      token: requests.token,
+      channel: 1,
+      version: 0,
+    };
+    return { ...newParams, ...params };
+  };
+
   const fetchData = (
     url: string,
     method: 'GET' | 'POST' | 'PUT' | 'DELETE',

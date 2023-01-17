@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import request from 'umi-request';
+import customRequest from './request';
 import ChatPro from './ChatPro';
 import { Components, Config, Handlers, Options, Requests } from './types';
 
@@ -15,7 +15,10 @@ export class ChatSDK {
     this.root = options.root;
     this.config = options.config;
     if (!options.requests.request) {
-      options.requests.request = request;
+      options.requests.request = customRequest(
+        options.requests.requestInterceptor,
+        options.requests.responseInterceptor,
+      );
     }
     if (!options.requests.tokenUrl) {
       options.requests.tokenUrl = '/qa/security/token/';

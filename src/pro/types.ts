@@ -1,4 +1,9 @@
-import { RequestOptionsInit, RequestOptionsWithResponse, RequestResponse } from 'umi-request';
+import {
+  RequestInterceptor,
+  RequestOptionsInit,
+  RequestResponse,
+  ResponseInterceptor,
+} from 'umi-request';
 import { MessageProps, QuickReplyItemProps, ToolbarItemProps } from '..';
 import { AutoCompleteItemProps } from '../components/AutoCompletes';
 import { User } from '../components/Message/Message';
@@ -43,8 +48,10 @@ export interface Requests {
   userId: string;
   sceneId: string;
   openMediaUrl?: string | '/qa/manage/media/preview';
-  request?: (url: string, options: RequestOptionsWithResponse) => Promise<RequestResponse<any>>;
+  request?: (url: string, options: RequestOptionsInit) => Promise<RequestResponse<any>>;
   send?: (msg: MessageWithoutId) => Promise<CommonRequestResponse>;
+  requestInterceptor?: RequestInterceptor;
+  responseInterceptor?: ResponseInterceptor;
 }
 
 export interface Handlers {
