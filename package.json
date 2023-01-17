@@ -23,7 +23,7 @@
     "build": "npm run js:cjs && npm run js:esm && npm run build:types",
     "build:css": "lessc src/styles/index.less dist/index.css && npm run prefix && npm run copy:less",
     "build:umd": " cross-env BABEL_ENV=umd rollup -c && npm run build:css",
-    "docs:dev": "vitepress dev docs",
+    "docs:dev": "vitepress dev docs --host",
     "docs:build": "vitepress build docs",
     "docs:serve": "vitepress serve docs",
     "prepublishOnly": "npm run build && npm run build:umd",
