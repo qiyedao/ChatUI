@@ -135,7 +135,7 @@ export default defineConfig({
           text: 'Guide',
           items: [
             {
-              text: 'Why Vite',
+              text: 'Why Chat Pro',
               link: '/guide/why',
             },
             {
