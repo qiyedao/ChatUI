@@ -34,21 +34,6 @@ export class ChatSDK {
     };
   }
 
-  handleMessageAvtar() {
-    if (this.config) {
-      const messages = this.config?.messages || [];
-      messages.map((item) => {
-        if (item.type !== 'system') {
-          if (item.position == 'right') {
-            item.user = this.config?.user || {};
-          } else {
-            item.user = this.config?.robot || {};
-          }
-        }
-      });
-      this.config.messages = messages;
-    }
-  }
   async handleGetToken() {
     if (this.requests?.tokenUrl && this.requests.request) {
       const { data } = await this.requests.request(this.requests.baseUrl + this.requests.tokenUrl, {
@@ -71,8 +56,6 @@ export class ChatSDK {
 
   async init() {
     await this.handleGetToken();
-
-    this.handleMessageAvtar();
 
     ReactDOM.render(
       <ChatPro

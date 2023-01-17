@@ -60,6 +60,8 @@ export interface Handlers {
   onInputChange?: (value: string, ctx: Ctx) => void;
   //埋点
   track?: (data: any) => void;
+  //解析响应结果
+  parseResponse?: (res: any) => MessageProps | undefined;
 }
 
 export type Ctx = {

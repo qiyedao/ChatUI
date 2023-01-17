@@ -23,7 +23,7 @@ export interface MessageProps {
   /**
    * 消息类型
    */
-  type: string | number;
+  type: string;
   /**
    * 消息内容
    */

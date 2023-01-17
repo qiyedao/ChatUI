@@ -42,6 +42,7 @@ import { MessageProps } from 'chat-pro';
 
 import DefaultMsg from 'chat-pro/pro/components/Chat/DefaultMsg';
 import { Ctx } from 'chat-pro/pro/types';
+import { AnswerType } from 'chat-pro/pro/utils/constants';
 
 export default () => {
   const initialMessages: MessageProps[] = [
@@ -51,7 +52,7 @@ export default () => {
       _id: 123,
     },
     {
-      type: 'text',
+      type: AnswerType.TextMsg,
       content: { text: 'Hi，我是你的专属智能助理小蜜，有问题请随时找我哦~' },
       createdAt: Date.now(),
       hasTime: true,
@@ -66,7 +67,7 @@ export default () => {
       _id: 123456,
     },
     {
-      type: 'text',
+      type: AnswerType.TextMsg,
       content: { text: '小蜜我要查看我的物流信息' },
       position: 'right',
       _id: 1234567,
@@ -246,16 +247,18 @@ export default () => {
   useEffect(() => {
     chat = new ChatSDK({
       root: document.getElementById('chat-pro') as HTMLElement,
+
       config: {
         messages: initialMessages,
+        avatarWhiteList: [AnswerType.TextMsg],
         quickReplies: defaultQuickReplies,
         robot: {
           avatar: '//gw.alicdn.com/tfs/TB1DYHLwMHqK1RjSZFEXXcGMXXa-56-62.svg',
-          name: '小小蜜',
+          name: '机器人',
         },
         user: {
           avatar: '//gw.alicdn.com/tfs/TB1DYHLwMHqK1RjSZFEXXcGMXXa-56-62.svg',
-          name: '小小蜜',
+          name: '用户',
         },
       },
       requests: {
@@ -296,19 +299,31 @@ export default () => {
         track: function (data) {
           console.log('track', data);
         },
+        parseResponse: function (res) {
+          console.log(res);
+          if (res.errorCode == 320004) {
+            return {
+              type: AnswerType.TextMsg,
+              content: { text: res.message },
+            };
+          }
+        },
       },
       components: {
         'skill-cards': SkillCard,
         'guess-you': GuessYou,
-        0: DefaultCard,
+        '0': DefaultCard,
       },
     });
 
     chat.init();
   }, []);
   return (
-    <div style={{ height: 'calc(100vh - 0px)' }} id="chat-pro"></div>
+    <div>
+      <div style={{ height: 'calc(100vh - 0px)' }} id="chat-pro"></div>;
+    </div>
   );
 };
+
 
 ```

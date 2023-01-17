@@ -17,6 +17,7 @@ import { AutoCompleteItemProps } from '../components/AutoCompletes';
 import umiRequest from 'umi-request';
 import { MessageContainerHandle } from '../components/MessageContainer';
 import { ComposerHandle } from '../components/Composer';
+import { AnswerType } from './utils/constants';
 interface ChatProProps {
   config: Config;
   requests: Requests;
@@ -143,7 +144,7 @@ const ChatPro: React.FC<ChatProProps> = (props) => {
     if (type === 'text' && val.trim()) {
       // TODO: 发送请求
       appendMsg({
-        type: 'text',
+        type: AnswerType.TextMsg,
         content: { text: val },
         position: 'right',
       });
@@ -153,7 +154,7 @@ const ChatPro: React.FC<ChatProProps> = (props) => {
       }, 10);
 
       send({
-        type: 'text',
+        type: AnswerType.TextMsg,
         content: { text: val },
       }).then((res) => {
         let { url, options } = res;
@@ -177,7 +178,14 @@ const ChatPro: React.FC<ChatProProps> = (props) => {
                 content: { data: msgData, meta: {} },
               });
             } else {
-              toast.fail(data.message || '请求失败');
+              if (handlers.parseResponse) {
+                const msgData = handlers.parseResponse(data);
+                if (msgData) {
+                  appendMsg(msgData);
+                }
+              } else {
+                toast.fail(data.message || '请求失败');
+              }
             }
           });
       });
@@ -194,6 +202,21 @@ const ChatPro: React.FC<ChatProProps> = (props) => {
       }
     }
     handlers?.track?.({ event: 'QuickReplyClick', item });
+  }
+
+  function handleMessageAvtar(list: MessageProps[]) {
+    list.map((item: MessageProps) => {
+      if (config.avatarWhiteList?.includes(item.type)) {
+        if (item.type !== 'system') {
+          if (item.position == 'right') {
+            item.user = config?.user || {};
+          } else {
+            item.user = config?.robot || {};
+          }
+        }
+      }
+    });
+    return messages;
   }
   function handleAutoComplete(item: AutoCompleteItemProps) {
     handleSend('text', item.name);
@@ -225,7 +248,13 @@ const ChatPro: React.FC<ChatProProps> = (props) => {
     handlers?.track?.({ event: 'SendClick', val });
     setAutoCompletes([]);
   }
-  const TemplateTypeList = ['text', 'image', 0, 1];
+  //内置模板类型
+  const TemplateTypeList = [
+    AnswerType.TextMsg,
+    AnswerType.ImageMsg,
+    AnswerType.DefaultMsg,
+    AnswerType.AccurateMsg,
+  ];
   function renderMessageContent(msg: MessageProps) {
     const { type = '' } = msg;
 
@@ -235,23 +264,23 @@ const ChatPro: React.FC<ChatProProps> = (props) => {
     } else {
       if (TemplateTypeList.includes(type)) {
       } else {
-        toast.show('请注册模板组件');
+        toast.show('请注册模板组件' + type);
       }
     }
     // 根据消息类型来渲染
     switch (type) {
-      case 'text':
+      case AnswerType.TextMsg:
         return <Bubble content={msg?.content?.text} />;
 
-      case 'image':
+      case AnswerType.ImageMsg:
         return (
           <Bubble type="image">
             <img src={msg?.content?.picUrl} alt="" />
           </Bubble>
         );
-      case 0:
+      case AnswerType.DefaultMsg:
         return <DefaultMsg data={msg?.content?.data} meta={msg?.content?.meta || {}} ctx={ctx} />;
-      case 1:
+      case AnswerType.AccurateMsg:
         return <AccurateMsg data={msg?.content?.data} meta={msg?.content?.meta || {}} ctx={ctx} />;
 
       default:
@@ -267,7 +296,7 @@ const ChatPro: React.FC<ChatProProps> = (props) => {
       onToolbarClick={handleToolbarClick}
       recorder={{ canRecord: config.inputType == 'voice' }}
       wideBreakpoint="600px"
-      messages={getNoClickList(messages)}
+      messages={getNoClickList(handleMessageAvtar(messages))}
       renderMessageContent={renderMessageContent}
       quickReplies={quickReplies}
       quickRepliesVisible={quickRepliesVisible}

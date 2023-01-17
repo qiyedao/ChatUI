@@ -12,6 +12,7 @@ new ChatSDK({ config: { ...args } });
 
 ```js
 interface Config {
+  avatarWhiteList?: string[]; // 头像白名单 模板类型值
   robot?: User; // 机器人信息
   user?: User; // 发送者信息
   messages?: MessageProps[]; // 初始化消息
