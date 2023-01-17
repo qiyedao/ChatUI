@@ -182,6 +182,7 @@ export default () => {
           </div>
           <FlexItem
             onClick={() => {
+              ctx.log.click({ text: '猜你想问' }, { type: 'GuessYou' });
               ctx.postMessage('text', '猜你想问');
               ctx.util
                 .fetchData(ctx.requests.baseUrl + '/qa/server/qa/recommend/detail', 'GET', {
@@ -232,23 +233,8 @@ export default () => {
       },
       requests: {
         baseUrl: 'http://192.168.3.209:18080',
-        tokenUrl: '/qa/security/token/',
         userId: '1000008c169907f3b2843fba8c67c6a4a8fd23a',
         sceneId: '4840de564d794fc7bee7fc90f1f125c0',
-        openMediaUrl: `/qa/manage/media/preview`,
-
-        send: async (msg) => {
-          return {
-            url: '/qa/server/qa/question',
-            options: {
-              params: {
-                questioning: msg.content.text,
-                version: 0,
-                channel: 1,
-              },
-            },
-          };
-        },
       },
       handlers: {
         onToolbarClick: function (item, ctx) {
@@ -263,7 +249,7 @@ export default () => {
         onInputChange: function (value: string, ctx: Ctx) {
           console.log('value', value);
           if (value) {
-            ctx.ui.setAutoCompletes([
+            ctx.setAutoCompletes([
               {
                 icon: 'shopping-bag',
                 name: value,
@@ -277,8 +263,11 @@ export default () => {
               },
             ]);
           } else {
-            ctx.ui.setAutoCompletes([]);
+            ctx.setAutoCompletes([]);
           }
+        },
+        track: function (data) {
+          console.log('track', data);
         },
       },
       components: {

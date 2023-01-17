@@ -17,6 +17,12 @@ export class ChatSDK {
     if (!options.requests.request) {
       options.requests.request = request;
     }
+    if (!options.requests.tokenUrl) {
+      options.requests.tokenUrl = '/qa/security/token/';
+    }
+    if (!options.requests.openMediaUrl) {
+      options.requests.openMediaUrl = '/qa/manage/media/preview';
+    }
     this.requests = options.requests;
     this.components = options.components;
     this.handlers = options.handlers;
@@ -44,7 +50,7 @@ export class ChatSDK {
     }
   }
   async handleGetToken() {
-    if (this.requests?.tokenUrl) {
+    if (this.requests?.tokenUrl && this.requests.request) {
       const { data } = await this.requests.request(this.requests.baseUrl + this.requests.tokenUrl, {
         params: {
           param: 'test',

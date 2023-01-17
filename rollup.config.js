@@ -4,7 +4,7 @@ import babel from '@rollup/plugin-babel';
 import { terser } from 'rollup-plugin-terser';
 import pkg from './package.json';
 import postcss from 'rollup-plugin-postcss';
-
+import json from '@rollup/plugin-json';
 const name = 'ChatUI';
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
@@ -15,7 +15,7 @@ export default {
     resolve({ extensions }),
     commonjs(),
     postcss(),
-
+    json(),
     babel({
       extensions,
       babelHelpers: 'runtime',

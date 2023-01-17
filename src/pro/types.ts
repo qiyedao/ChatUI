@@ -42,14 +42,14 @@ export interface Requests {
   token?: string;
   userId: string;
   sceneId: string;
-  openMediaUrl: string | '/qa/manage/media/preview';
-  request: (url: string, options: RequestOptionsWithResponse) => Promise<RequestResponse<any>>;
-  send: (msg: MessageWithoutId) => Promise<CommonRequestResponse>;
+  openMediaUrl?: string | '/qa/manage/media/preview';
+  request?: (url: string, options: RequestOptionsWithResponse) => Promise<RequestResponse<any>>;
+  send?: (msg: MessageWithoutId) => Promise<CommonRequestResponse>;
 }
 
 export interface Handlers {
   //格式化消息
-  formatReceiveMsg: (res: any) => any;
+  formatReceiveMsg?: (res: any) => any;
   //点击快捷短语
   onClickQuickReply?: (item: QuickReplyItemProps, ctx: Ctx) => void;
   //工具栏
@@ -58,6 +58,8 @@ export interface Handlers {
   onClickAutoComplete?: (item: AutoCompleteItemProps, ctx: Ctx) => void;
   //输入框输入
   onInputChange?: (value: string, ctx: Ctx) => void;
+  //埋点
+  track?: (data: any) => void;
 }
 
 export type Ctx = {
@@ -73,27 +75,27 @@ export type Ctx = {
   // 删除消息
   deleteMessage(msgId: string): void;
 
+  //设置联想输入数据
+  setAutoCompletes: (list: AutoCompleteItemProps[]) => void;
   // // 埋点方法
-  // log: {
-  //   // 点击埋点
-  //   click(params: any, logParams: any): void;
+  log: {
+    // 点击埋点
+    click(params: any, logParams: any): void;
 
-  //   // 曝光埋点
-  //   expo(params: any, logParams: any): void;
-  // };
+    // // 曝光埋点
+    // expo(params: any, logParams: any): void;
+  };
 
   // // 界面相关的方法
   ui: {
     // // 滚动消息列表到底部
-    // scrollToEnd(opts?: { animated?: boolean; delay?: number }): void;
+    scrollToEnd(opts?: { animated?: boolean }): void;
 
     // 隐藏快捷短语
     hideQuickReplies(): void;
 
     // 显示快捷短语
     showQuickReplies(): void;
-    //设置联想输入
-    setAutoCompletes: (list: AutoCompleteItemProps[]) => void;
   };
 
   // 配置
