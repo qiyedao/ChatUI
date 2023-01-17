@@ -1,5 +1,5 @@
 {
-  "name": "@chatui/core",
+  "name": "chat-pro",
   "version": "2.4.8-beta.0",
   "description": "The React library for Chatbot UI",
   "main": "lib/index.js",

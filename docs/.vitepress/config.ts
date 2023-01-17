@@ -174,7 +174,7 @@ export default defineConfig({
               link: '/config/handlers',
             },
             {
-              text: 'Api ctx',
+              text: 'API-Ctx',
               link: '/config/API-ctx',
             },
           ],

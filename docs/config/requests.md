@@ -5,7 +5,7 @@ title: Requests Options
 # Requests Options
 
 ```js
-new ChatSDK({ ...args });
+new ChatSDK({ requests: { ...args } });
 ```
 
 ## requests
@@ -18,8 +18,17 @@ interface Requests {
   token?: string;
   userId: string;
   sceneId: string;
-  openMediaUrl: string | '/qa/manage/media/preview';
-  request: (url: string, options: RequestOptionsWithResponse) => Promise<RequestResponse<any>>;
-  send: (msg: MessageWithoutId) => Promise<CommonRequestResponse>;
+  openMediaUrl?: string | '/qa/manage/media/preview';
+  request?: (url: string, options: RequestOptionsWithResponse) => Promise<RequestResponse<any>>;
+  send?: (msg: MessageWithoutId) => Promise<CommonRequestResponse>;
 }
+```
+
+## CommonRequestResponse
+
+```js
+type CommonRequestResponse<T = RequestOptionsInit> = {
+  options: T,
+  url: string,
+};
 ```

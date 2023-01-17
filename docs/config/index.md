@@ -5,12 +5,12 @@ title: Root Options
 # Root Options
 
 ```js
-new ChatSDK({ ...args });
+const chat = new ChatSDK({ root:document.getElementBy('chat-pro'); });
+chat.init();
 ```
 
 ## root
 
 ```js
-document.getElementBy('root');
-<div id="root"></div>;
+<div style={{ height: 'calc(100vh - 0px)' }} id="chat-pro"></div>
 ```

@@ -1,6 +1,8 @@
 ---
-title: API:ctx
+title: API-Ctx
 ---
+
+# Context
 
 ## ctx
 
@@ -17,6 +19,26 @@ type Ctx = {
 
   // 删除消息
   deleteMessage(msgId: string): void,
+
+  //设置联想输入数据
+  setAutoCompletes: (list: AutoCompleteItemProps[]) => void,
+  // // 埋点方法
+  log: {
+    // 点击埋点
+    click(params: any, logParams: any): void,
+  },
+
+  // // 界面相关的方法
+  ui: {
+    // // 滚动消息列表到底部
+    scrollToEnd(opts?: { animated?: boolean }): void,
+
+    // 隐藏快捷短语
+    hideQuickReplies(): void,
+
+    // 显示快捷短语
+    showQuickReplies(): void,
+  },
 
   // 配置
   config: Config,
