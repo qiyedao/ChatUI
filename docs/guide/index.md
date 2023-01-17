@@ -327,3 +327,10 @@ export default () => {
 
 
 ```
+
+## More Usage
+
+```js
+directory: demo/*
+
+```

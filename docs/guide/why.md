@@ -1,5 +1,5 @@
-# Why ChatPro
+# Why chat-pro
 
 ## The Problems
 
-In the past, access to ChatBot was repeated coding
+::: tip In the past, access to ChatBot was repeated codingIn the past :::
