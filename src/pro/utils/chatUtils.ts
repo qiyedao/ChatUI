@@ -35,7 +35,7 @@ export const formatTaskAnswerNode = (qaInfos: any) => {
 //处理任务多轮禁止点击
 export const getNoClickList = (list: any[]) => {
   const newList = JSON.parse(JSON.stringify(list));
-  if (newList[newList.length - 1]?.answerType === AnswerType.SendMsg) return newList;
+  if (newList[newList.length - 1]?.answerType === AnswerType.TextMsg) return newList;
   let conversationId = '';
   let flag = false;
   //禁用多轮任务点击
